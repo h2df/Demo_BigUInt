@@ -30,6 +30,30 @@ int main()
     bigUInt h(e);
     testEqual(h, "100", "bigUInt ctr");
 
+    bigUInt i("123");
+    i.add(0);
+    testEqual(i, "123", "add function with 0");
+
+    bigUInt j(123);
+    j.add(1);
+    testEqual(j, "124", "add function with num smaller than origin");
+
+    bigUInt k(123);
+    k.add(100000);
+    testEqual(k, "100123", "add function with num bigger than origin");
+
+    bigUInt l(123);
+    l.add(bigUInt(23));
+    testEqual(l, "146", "add function bigUInt");
+
+    bigUInt m(123);
+    m.add(bigUInt("00"));
+    testEqual(m, "123", "add function bigUInt with 0");
+
+    bigUInt n(1);
+    n.increment();
+    testEqual(n, "2", "incremental");
+
     return 0;
 }
 
