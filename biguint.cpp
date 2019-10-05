@@ -11,7 +11,6 @@ bigUInt::bigUInt() {
 bigUInt::bigUInt(unsigned int n) {
     p = new char[20]; // max int is of 10 digits
     sprintf(p, "%d", n);
-    strrev(p);
 }
 
 bigUInt::bigUInt(const char *s) {
@@ -22,7 +21,6 @@ bigUInt::bigUInt(const char *s) {
     }
     if (i < len) {
         p = strdup(&s[i]);
-        strrev(p);
     } else {
         p = new char[2] {'0', 0};
     }
@@ -49,9 +47,7 @@ void bigUInt::increment() {
 }
 
 void bigUInt::print() {
-    strrev(p);
     printf("%s", p);
-    strrev(p);
 }
 
 bigUInt bigUInt::operator+(const bigUInt &x) {

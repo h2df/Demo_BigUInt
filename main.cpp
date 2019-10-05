@@ -34,11 +34,10 @@ int main()
 }
 
 void testEqual(bigUInt &u, char *t, char *m) {
-    char *rev = strrev(strdup(u.get_p()));
     printf("Testing [%s]\n", m);
-    if (strcmp(t, rev)) {
+    if (strcmp(t, u.get_p())) {
         printf("Expect: %s\n", t);
-        printf("Actual: %s\n", rev);
+        printf("Actual: %s\n", u.get_p());
     } else {
         printf("Pass.\n");
     }
