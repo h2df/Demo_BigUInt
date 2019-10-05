@@ -97,7 +97,11 @@ void addStr(char *&origin, const char *s) {
     newo[0] = addDigits(newo, news) + '0';    
     int i = 0;
     while (newo[i] == '0') i++;
-    origin = strdup(newo + i);
+    if (i < digits) {
+        origin = strdup(newo + i);
+    } else {
+        origin = new char[2] {'0', 0};
+    }
     delete[] newo;
     delete[] news;
 }

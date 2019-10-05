@@ -30,9 +30,9 @@ int main()
     bigUInt h(e);
     testEqual(h, "100", "bigUInt ctr");
 
-    bigUInt i("123");
+    bigUInt i("0");
     i.add(0);
-    testEqual(i, "123", "add function with 0");
+    testEqual(i, "0", "add function with 0");
 
     bigUInt j(123);
     j.add(1);
@@ -52,7 +52,9 @@ int main()
 
     bigUInt n(1);
     n.increment();
-    testEqual(n, "2", "incremental");
+    testEqual(n, "2", "increment");
+
+
 
     return 0;
 }
