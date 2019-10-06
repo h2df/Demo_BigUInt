@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 #include "biguint.h"
 #include "string.h"
 
@@ -65,7 +67,7 @@ void bigUInt::increment()
 
 void bigUInt::print()
 {
-    printf("%s", p);
+    cout << p;
 }
 
 bigUInt bigUInt::operator+(const bigUInt &x)
@@ -122,13 +124,13 @@ void opStr(char *&origin, const char *s, int(op)(char *, const char *))
     newo[0] = op(newo, news) + '0';
     if (newo[0] < '0')
     {
-        printf("invalid subtraction\n");
-        exit;
+        cout << "invalid subtraction";
+        exit(1);
     }
     else if (newo[0] > '1')
     {
-        printf("Overflow (Debugging purpose. This should never happen.)\n");
-        exit;
+        cout << "Overflow (Debugging purpose. This should never happen.)";
+        exit(1);
     }
 
     //clean up the leading 0s
