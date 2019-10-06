@@ -74,15 +74,18 @@ int main()
     return 0;
 }
 
-void testEqual(bigUInt &u, char *t, char *m) {
+void testEqual(bigUInt &u, char *t, char *m)
+{
     printf("Testing [%s]\n", m);
-    if (strcmp(t, u.get_p())) {
+    if (strcmp(t, u.get_p()))
+    {
         printf("Expect: %s\n", t);
         printf("Actual: %s\n", u.get_p());
         exit(1);
-    } else {
+    }
+    else
+    {
         printf("Pass.\n");
     }
     printf("\n");
 }
-
