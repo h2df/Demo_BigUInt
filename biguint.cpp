@@ -4,7 +4,8 @@
 
 using namespace std;
 int addDigits(char *i, const char *j);
-void addStr(char *&origin, const char *s);
+int subDigits(char *i, const char *j);
+void opStr(char *&origin, const char *s, int op(char *, const char *));
 
 bigUInt::bigUInt() {
     p = new char[2] {'0', 0};
@@ -39,15 +40,15 @@ bigUInt::~bigUInt() {
 void bigUInt::add(unsigned int n) {
     char *s = new char[80];
     sprintf(s, "%d", n);
-    addStr(p, s);
+    opStr(p, s, addDigits);
 }
 
 void bigUInt::add(const bigUInt &x) {
-    addStr(p, x.get_p());
+    opStr(p, x.get_p(), addDigits);
 }
 
 void bigUInt::increment() {
-    addStr(p, "1");
+    opStr(p, "1", addDigits);
 }
 
 void bigUInt::print() {
@@ -55,11 +56,15 @@ void bigUInt::print() {
 }
 
 bigUInt bigUInt::operator+(const bigUInt &x) {
-
+    bigUInt r(*this);
+    r.add(x);
+    return r;
 }
 
 bigUInt bigUInt::operator-(const bigUInt &x) {
-
+    char * s = strdup((*this).get_p());
+    opStr(s, x.get_p(), subDigits);
+    return bigUInt(s);
 }
 
 bigUInt & bigUInt::operator=(const bigUInt &x) {
@@ -70,7 +75,7 @@ std::ostream & operator<<(std::ostream &out, const bigUInt &x) {
 
 }
 
-void addStr(char *&origin, const char *s) {
+void opStr(char *&origin, const char *s, int (op)(char*, const char*)) {
     int olen = strlen(origin);
     int slen = strlen(s);
 
@@ -94,7 +99,16 @@ void addStr(char *&origin, const char *s) {
     delete[] origin;
 
     //recursively add each digits
-    newo[0] = addDigits(newo, news) + '0';    
+    newo[0] = op(newo, news) + '0';
+    if (newo[0] < '0') {
+        printf("invalid subtraction\n");
+        exit;
+    } else if (newo[0] > '1') {
+        printf("Overflow (Debugging purpose. This should never happen.)\n");
+        exit;
+    }
+
+    //clean up the leading 0s
     int i = 0;
     while (newo[i] == '0') i++;
     if (i < digits) {
@@ -114,6 +128,17 @@ int addDigits(char * i, const char * j) {
         int r =*i - '0' + *j - '0' + addDigits(i2, j2);
         *i = r % 10 + '0';
         return r > 9;
+    }
+}
+
+int subDigits(char * i, const char * j) {
+    if (*i == 0) return 0;
+    else {
+        char * i2 = i + 1;
+        const char * j2 = j + 1;
+        int r = *i - '0' - (*j - '0') + subDigits(i2, j2);
+        *i = (r > 0? r : -r) + '0';
+        return  -(r < 0);
     }
 }
 

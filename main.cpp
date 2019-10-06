@@ -54,7 +54,14 @@ int main()
     n.increment();
     testEqual(n, "2", "increment");
 
+    bigUInt p = bigUInt("1") + bigUInt("123") + bigUInt(23);
+    testEqual(p, "147", "add operator");
 
+    bigUInt q = bigUInt("123") - bigUInt("120") - bigUInt(3);
+    testEqual(q, "0", "sub operator");
+
+    bigUInt r = bigUInt("0") - bigUInt("1");
+    testEqual(q, "0", "");
 
     return 0;
 }
