@@ -30,7 +30,7 @@ bigUInt::bigUInt(const char *s) {
 }
 
 bigUInt::bigUInt(const bigUInt &x) {
-    p = strdup(x.get_p());
+    p = strdup(x.p);
 }
 
 bigUInt::~bigUInt() {
@@ -44,7 +44,7 @@ void bigUInt::add(unsigned int n) {
 }
 
 void bigUInt::add(const bigUInt &x) {
-    opStr(p, x.get_p(), addDigits);
+    opStr(p, x.p, addDigits);
 }
 
 void bigUInt::increment() {
@@ -62,17 +62,18 @@ bigUInt bigUInt::operator+(const bigUInt &x) {
 }
 
 bigUInt bigUInt::operator-(const bigUInt &x) {
-    char * s = strdup((*this).get_p());
-    opStr(s, x.get_p(), subDigits);
+    char * s = strdup((*this).p);
+    opStr(s, x.p, subDigits);
     return bigUInt(s);
 }
 
 bigUInt & bigUInt::operator=(const bigUInt &x) {
-
+    p = strdup(x.p);
+    return *this;
 }
 
 std::ostream & operator<<(std::ostream &out, const bigUInt &x) {
-
+    cout << x.get_p();
 }
 
 void opStr(char *&origin, const char *s, int (op)(char*, const char*)) {

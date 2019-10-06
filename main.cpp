@@ -63,6 +63,14 @@ int main()
     bigUInt r = bigUInt("0") - bigUInt("1");
     testEqual(q, "0", "");
 
+    bigUInt s1, s2;
+    s1 = s2 = bigUInt("123");
+    testEqual(s1, "123", "assignment operator");
+    testEqual(s2, "123", "assignment operator");
+
+    cout << bigUInt("12345") << endl;
+
+    printf("ALL PASSED\n");
     return 0;
 }
 
@@ -71,6 +79,7 @@ void testEqual(bigUInt &u, char *t, char *m) {
     if (strcmp(t, u.get_p())) {
         printf("Expect: %s\n", t);
         printf("Actual: %s\n", u.get_p());
+        exit(1);
     } else {
         printf("Pass.\n");
     }
