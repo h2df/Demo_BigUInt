@@ -9,14 +9,14 @@ int addDigits(char *i, const char *j);
 int subDigits(char *i, const char *j);
 void opStr(char *&origin, const char *s, int op(char *, const char *));
 
-bigUInt::bigUInt()
+bigUInt::bigUInt () : p(new char[2])
 {
-    p = new char[2]{'0', 0};
+    p[0] = '0';
+    p[1] = 0;
 }
 
-bigUInt::bigUInt(unsigned int n)
+bigUInt::bigUInt(unsigned int n) : p(new char[80])
 {
-    p = new char[80]; // max int is of 10 digits
     sprintf(p, "%d", n);
 }
 
@@ -30,17 +30,21 @@ bigUInt::bigUInt(const char *s)
     }
     if (i < len)
     {
-        p = strdup(&s[i]);
+        p = new char[len - i + 1];
+        strcpy(p, &s[i]);
     }
     else
     {
-        p = new char[2]{'0', 0};
+        p = new char[2];
+        p[0] = '0';
+        p[1] = 0;
     }
 }
 
 bigUInt::bigUInt(const bigUInt &x)
 {
-    p = strdup(x.p);
+    p = new char[strlen(x.p) + 1];
+    strcpy(p, x.p);
 }
 
 bigUInt::~bigUInt()
@@ -53,6 +57,7 @@ void bigUInt::add(unsigned int n)
     char *s = new char[80];
     sprintf(s, "%d", n);
     opStr(p, s, addDigits);
+    delete[] s;
 }
 
 void bigUInt::add(const bigUInt &x)
@@ -79,14 +84,16 @@ bigUInt bigUInt::operator+(const bigUInt &x)
 
 bigUInt bigUInt::operator-(const bigUInt &x)
 {
-    char *s = strdup((*this).p);
-    opStr(s, x.p, subDigits);
-    return bigUInt(s);
+    bigUInt r(*this);
+    opStr(r.p, x.p, subDigits);
+    return r;
 }
 
 bigUInt &bigUInt::operator=(const bigUInt &x)
 {
-    p = strdup(x.p);
+    delete[] p;
+    p = new char[strlen(x.p) + 1];
+    strcpy(p, x.p);
     return *this;
 }
 
@@ -139,11 +146,14 @@ void opStr(char *&origin, const char *s, int(op)(char *, const char *))
         i++;
     if (i < digits)
     {
-        origin = strdup(newo + i);
+        origin = new char[digits + 1  - i];
+        strcpy(origin, &newo[i]);
     }
     else
     {
-        origin = new char[2]{'0', 0};
+        origin = new char[2];
+        origin[0] = '0';
+        origin[1] = 0;
     }
     delete[] newo;
     delete[] news;

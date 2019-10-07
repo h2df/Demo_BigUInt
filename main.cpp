@@ -5,7 +5,7 @@
 #include "string.h"
 
 using namespace std;
-void testEqual(bigUInt &u, char *t, char *m);
+void testEqual(const bigUInt &u, const char *t, const char *m);
 int main()
 {
     bigUInt a;
@@ -56,11 +56,27 @@ int main()
     n.increment();
     testEqual(n, "2", "increment");
 
-    bigUInt p = bigUInt("1") + bigUInt("123") + bigUInt(23);
+    bigUInt p1("1");
+    bigUInt p2("123");
+    bigUInt p3(23);
+    bigUInt p = p1 + p2 + p3;
     testEqual(p, "147", "add operator");
 
-    bigUInt q = bigUInt("123") - bigUInt("120") - bigUInt(3);
+    testEqual(p1,"1", "add operator does not change operand");
+    testEqual(p2,"123", "add operator does not change operand");
+    testEqual(p3,"23", "add operator does not change operand");
+
+
+    bigUInt q1("123");
+    bigUInt q2("120");
+    bigUInt q3(3);
+
+    bigUInt q = q1 - q2 - q3;
     testEqual(q, "0", "sub operator");    
+    testEqual(q1, "123", "sub operator does not change operand");
+    testEqual(q2, "120", "sub operator does not change operand");
+    testEqual(q3, "3", "sub operator does not change operand");
+
 
     bigUInt s1, s2;
     s1 = s2 = bigUInt("123");
@@ -71,7 +87,7 @@ int main()
     return 0;
 }
 
-void testEqual(bigUInt &u, char *t, char *m)
+void testEqual(const bigUInt &u, const char *t, const char *m)
 {
     printf("Testing [%s]\n", m);
     if (strcmp(t, u.get_p()))
