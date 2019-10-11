@@ -99,7 +99,8 @@ bigUInt &bigUInt::operator=(const bigUInt &x)
 
 std::ostream &operator<<(std::ostream &out, const bigUInt &x)
 {
-    cout << x.get_p();
+    out << x.get_p();
+    return out;
 }
 
 void opStr(char *&origin, const char *s, int(op)(char *, const char *))

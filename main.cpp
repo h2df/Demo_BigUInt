@@ -83,7 +83,7 @@ int main()
     testEqual(s1, "123", "assignment operator");
     testEqual(s2, "123", "assignment operator");
 
-    cout << bigUInt("12345") << endl; //cout<<
+    cout << bigUInt("12345") << bigUInt("6789") << bigUInt("") << endl; //cout<<
     return 0;
 }
 
