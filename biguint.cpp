@@ -15,7 +15,7 @@ bigUInt::bigUInt () : p(new char[2])
     p[1] = 0;
 }
 
-bigUInt::bigUInt(unsigned int n) : p(new char[80])
+bigUInt::bigUInt(unsigned int n) : p(new char[10])
 {
     sprintf(p, "%d", n);
 }

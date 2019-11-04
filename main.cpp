@@ -83,6 +83,29 @@ int main()
     testEqual(s1, "123", "assignment operator");
     testEqual(s2, "123", "assignment operator");
 
+
+    bigUInt d1(64);
+    bigUInt d2("64");
+    bigUInt d3 = d1 + d2;
+    testEqual(d3, "128", "two 64"); //TODO : failing test cases
+
+    bigUInt d4("99999999999999999999999999999999999999999999999999");
+    bigUInt d5(d4);
+    d5.increment();
+    testEqual(d5, "100000000000000000000000000000000000000000000000000", "huge number increment"); //TODO : failing test cases
+
+    int bigStrSize = 1000000;
+    char * bigS1 = new char[bigStrSize];
+    for (int i = 0; i < bigStrSize; i++) bigS1[i] = (i < bigStrSize - 1)? '9' : '\0';
+    char * bigS2 = new char[bigStrSize];
+    for (int i = 0; i < bigStrSize - 1; i++) bigS2[i] = (i < bigStrSize - 2)? '9' : '8';
+    bigS2[bigStrSize - 1] = '\0';
+    bigUInt d6 = bigUInt(bigS1) - bigUInt(bigS2);
+    testEqual(d6, "1", "big string sub");  //TODO : failing test cases
+
+    bigUInt d7("99999999999999999999999999999999999999999999999998");
+    bigUInt d8 = d6 - d7;
+
     cout << bigUInt("12345") << bigUInt("6789") << bigUInt("") << endl; //cout<<
     return 0;
 }
